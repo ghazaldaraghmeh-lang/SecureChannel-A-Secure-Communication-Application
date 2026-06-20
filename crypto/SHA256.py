@@ -1,4 +1,4 @@
-import math
+# SHA256
 
 def pad_message(message: bytes) -> bytes:
     """Pads message to a multiple of 512 bits (64 bytes) according to spec."""
@@ -59,7 +59,7 @@ def sha256_from_scratch(message: bytes) -> bytes:
         # Core Compression Loop (64 Rounds)
         for i in range(64):
             S1 = rotr(e, 6) ^ rotr(e, 11) ^ rotr(e, 25)
-            ch = (e & f) ^ (~e & g)
+            ch = (e & f) ^ ((~e & 0xFFFFFFFF) & g)
             temp1 = (h + S1 + ch + K[i] + W[i]) & 0xFFFFFFFF
             S0 = rotr(a, 2) ^ rotr(a, 13) ^ rotr(a, 22)
             maj = (a & b) ^ (a & c) ^ (b & c)
@@ -79,4 +79,3 @@ def sha256_from_scratch(message: bytes) -> bytes:
 
     # Convert state array integers back to bytes
     return b"".join(val.to_bytes(4, 'big') for val in H)
-
