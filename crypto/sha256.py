@@ -1,4 +1,4 @@
-# SHA256
+# sha256
 
 def pad_message(message: bytes) -> bytes:
     """Pads message to a multiple of 512 bits (64 bytes) according to spec."""
