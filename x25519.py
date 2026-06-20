@@ -1,7 +1,5 @@
 # x25519.py
-#
 # RFC 7748 - X25519 implementation
-# Pure Python implementation
 
 import secrets
 
