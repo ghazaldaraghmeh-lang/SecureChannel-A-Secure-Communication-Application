@@ -1,4 +1,4 @@
-import hashlib
+from sha256 import sha256_from_scratch
 
 BLOCK_SIZE = 64  # SHA-256 block size
 
@@ -6,7 +6,7 @@ BLOCK_SIZE = 64  # SHA-256 block size
 def hmac_sha256(key: bytes, message: bytes) -> bytes:
     # إذا المفتاح أطول من 64 بايت -> نعمله hash أولاً
     if len(key) > BLOCK_SIZE:
-        key = hashlib.sha256(key).digest()
+        key = sha256_from_scratch(key)
 
     # padding للمفتاح
     key = key.ljust(BLOCK_SIZE, b'\x00')
@@ -14,8 +14,8 @@ def hmac_sha256(key: bytes, message: bytes) -> bytes:
     o_key_pad = bytes([b ^ 0x5c for b in key])
     i_key_pad = bytes([b ^ 0x36 for b in key])
 
-    inner = hashlib.sha256(i_key_pad + message).digest()
-    return hashlib.sha256(o_key_pad + inner).digest()
+    inner = sha256_from_scratch(i_key_pad + message)
+    return sha256_from_scratch(o_key_pad + inner)
 
 
 if __name__ == "__main__":
