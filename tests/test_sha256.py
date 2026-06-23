@@ -1,7 +1,7 @@
 # test_sha256.py
 
 import hashlib
-from SecureChannel.crypto.sha256 import sha256_from_scratch
+from sha256 import sha256_from_scratch
 
 
 def test(message: bytes):
