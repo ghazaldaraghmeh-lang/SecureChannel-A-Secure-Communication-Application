@@ -11,9 +11,6 @@ from hkdf import hkdf_derive
 from hmac_ref import hmac_sha256
 from sha256 import sha256_from_scratch
 
-
-# =========================
-# CONFIG
 # =========================
 HOST = "127.0.0.1"
 PORT = 5000
@@ -22,10 +19,6 @@ PROTOCOL_VERSION = b"ENCS4320-v1"
 
 PSK = b"my_super_secret_psk"
 
-
-# =========================
-# HELPERS
-# =========================
 def build_transcript(client_pub, server_pub, client_id=b"client", server_id=b"server"):
     return PROTOCOL_VERSION + client_id + server_id + client_pub + server_pub
 
@@ -171,10 +164,6 @@ def server():
 
     conn.close()
     sock.close()
-
-
-# =========================
-# RUN MODE
 # =========================
 if __name__ == "__main__":
     mode = input("Run as (c)lient or (s)erver? ").strip().lower()
