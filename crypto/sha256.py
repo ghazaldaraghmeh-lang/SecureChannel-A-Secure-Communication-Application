@@ -79,3 +79,4 @@ def sha256_from_scratch(message: bytes) -> bytes:
 
     # Convert state array integers back to bytes
     return b"".join(val.to_bytes(4, 'big') for val in H)
+
