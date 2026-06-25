@@ -87,14 +87,6 @@ def client():
     # 2. Send client pubkey
     send(sock, c_pub)
 
-    # 3. Receive server pubkeyPS C:\Users\Lenovo\Desktop\....> python handshake.py
-    # Run as (c)lient or (s)erver? c
-    # SHARED: 6ccb663fa0d42e634a4215943514d6b96f23b98fe91bc86dfd3bb98c311b9b79
-    # [CLIENT]  Server authenticated
-    # [CLIENT] Shared session established
-    # C->S Key: 7fdee66a720e3423296d285b781100a3fe60704c14dce2ae71379281e30fb4fb
-    # S->C Key: aa67ed59e79e2f2ba8a8f544233ff8e1b47a53f8fac64a4f8c0447a7dbeb02f0
-    # Nonce   : 0749c0dfca41c874d4f32d18deac4937de2b7cce0bc5012a66dd7777abfebed6
 
     s_pub = recv(sock)
 
@@ -242,3 +234,14 @@ if __name__ == "__main__":
         client()
     else:
         server()
+
+    # 3. Receive server pubkeyPS C:\Users\Lenovo\Desktop\....> python handshake.py
+    # Run as (c)lient or (s)erver? c
+    # SHARED: 6ccb663fa0d42e634a4215943514d6b96f23b98fe91bc86dfd3bb98c311b9b79
+    # [CLIENT]  Server authenticated
+    # [CLIENT] Shared session established
+    # C->S Key: 7fdee66a720e3423296d285b781100a3fe60704c14dce2ae71379281e30fb4fb
+    # S->C Key: aa67ed59e79e2f2ba8a8f544233ff8e1b47a53f8fac64a4f8c0447a7dbeb02f0
+    # Nonce   : 0749c0dfca41c874d4f32d18deac4937de2b7cce0bc5012a66dd7777abfebed6
+    #[CLIENT] Encrypted message sent
+
