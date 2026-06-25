@@ -1,7 +1,7 @@
-# hkdf.py
+# hkdf
 # RFC 5869 - HKDF using HMAC-SHA256
 
-from SecureChannel.crypto.HMAC import hmac_sha256
+from hmac import hmac_sha256
 
 HASH_LEN = 32  # SHA-256 output length
 
