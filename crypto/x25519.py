@@ -1,4 +1,4 @@
-# x25519.py
+# x25519
 # RFC 7748 - X25519 implementation
 
 import secrets
