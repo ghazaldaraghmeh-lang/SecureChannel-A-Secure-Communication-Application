@@ -1,6 +1,6 @@
 # hmac
 
-from sha256 import sha256_from_scratch
+from crypto.sha256 import sha256_from_scratch
 
 BLOCK_SIZE = 64  # SHA-256 block size
 
