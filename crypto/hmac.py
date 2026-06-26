@@ -1,88 +1,29 @@
-# hkdf
-# RFC 5869 - HKDF using HMAC-SHA256
+# hmac
+from crypto.sha256 import sha256_from_scratch
 
-from crypto.hmac import hmac_sha256
-
-HASH_LEN = 32  # SHA-256 output length
+BLOCK_SIZE = 64  # SHA-256 block size
 
 
-def hkdf_extract(salt: bytes, ikm: bytes) -> bytes:
-    """
-    HKDF-Extract
+def hmac_sha256(key: bytes, message: bytes) -> bytes:
+    # If the key is longer than 64 bytes, hash it first.
+    if len(key) > BLOCK_SIZE:
+        key = sha256_from_scratch(key)
 
-    PRK = HMAC(salt, IKM)
-    """
+    # Apply padding to the key
+    key = key.ljust(BLOCK_SIZE, b'\x00')
 
-    if not salt:
-        salt = b'\x00' * HASH_LEN
+    o_key_pad = bytes([b ^ 0x5c for b in key])
+    i_key_pad = bytes([b ^ 0x36 for b in key])
 
-    return hmac_sha256(salt, ikm)
-
-
-def hkdf_expand(prk: bytes,
-                info: bytes,
-                length: int) -> bytes:
-    """
-    HKDF-Expand
-    """
-
-    if length > 255 * HASH_LEN:
-        raise ValueError("Requested length too large")
-
-    okm = b''
-    t = b''
-
-    counter = 1
-
-    while len(okm) < length:
-
-        t = hmac_sha256(
-            prk,
-            t + info + bytes([counter])
-        )
-
-        okm += t
-        counter += 1
-
-    return okm[:length]
-
-
-def hkdf_derive(ikm: bytes,
-                salt: bytes,
-                info: bytes,
-                length: int) -> bytes:
-    """
-    Complete HKDF
-    """
-
-    prk = hkdf_extract(salt, ikm)
-
-    return hkdf_expand(
-        prk,
-        info,
-        length
-    )
+    inner = sha256_from_scratch(i_key_pad + message)
+    return sha256_from_scratch(o_key_pad + inner)
 
 
 if __name__ == "__main__":
+    msg = b"hello world"
+    key = b"secret"
 
-    # Example shared secret from X25519
-    shared_secret = b"example_shared_secret"
+    result = hmac_sha256(key, msg)
 
-    # In your project the PSK is used as salt
-    psk = b"my_super_secret_psk"
-
-    session_material = hkdf_derive(
-        ikm=shared_secret,
-        salt=psk,
-        info=b"SecureChannel-v1",
-        length=96
-    )
-
-    client_to_server_key = session_material[:32]
-    server_to_client_key = session_material[32:64]
-    nonce_material = session_material[64:96]
-
-    print("Client -> Server Key :", client_to_server_key.hex())
-    print("Server -> Client Key :", server_to_client_key.hex())
-    print("Nonce Material       :", nonce_material.hex())
+    print("HMAC-SHA256:", result.hex())
+    
