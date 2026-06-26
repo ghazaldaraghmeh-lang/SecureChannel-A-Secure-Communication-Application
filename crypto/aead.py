@@ -2,12 +2,12 @@
 
 import struct
 
-from chacha20 import (
+from crypto.chacha20 import (
     chacha20_block,
     chacha20_encrypt,
 )
 
-from poly1305 import (
+from crypto.poly1305 import (
     poly1305_mac,
 )
 
