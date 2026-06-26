@@ -19,7 +19,6 @@ from protocol.session import (
 HOST = "127.0.0.1"
 PORT = 5000
 
-
 def send(sock, data: bytes):
     sock.sendall(len(data).to_bytes(4, "big") + data)
 
@@ -96,7 +95,7 @@ def main():
 
     message = decrypt_message(
         keys["c2s_key"],
-        keys["nonce_seed"],
+        keys["nonce"],
         sequence,
         ciphertext,
         tag
@@ -110,7 +109,7 @@ def main():
 
     sequence, ciphertext, tag = encrypt_message(
         keys["s2c_key"],
-        keys["nonce_seed"],
+        keys["nonce"],
         b"Hello Client"
     )
 
