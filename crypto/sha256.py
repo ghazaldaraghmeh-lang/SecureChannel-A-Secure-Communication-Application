@@ -80,21 +80,3 @@ def sha256_from_scratch(message: bytes) -> bytes:
     # Convert state array integers back to bytes
     return b"".join(val.to_bytes(4, 'big') for val in H)
 
-def test(message: bytes):
-    my_hash = sha256_from_scratch(message).hex()
-    real_hash = hashlib.sha256(message).hexdigest()
-
-    print(f"Message: {message}")
-    print(f"My Hash:     {my_hash}")
-    print(f"Python Hash: {real_hash}")
-
-    if my_hash == real_hash:
-        print("PASS\n")
-    else:
-        print("FAIL\n")
-
-
-test(b"")
-test(b"abc")
-test(b"Hello World")
-test(b"a" * 1000)
