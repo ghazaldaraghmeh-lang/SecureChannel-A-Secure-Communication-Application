@@ -27,67 +27,40 @@ The system establishes a secure session between a client and a server, derives i
 ---
 
 ## Project Structure
+
+```
 Project/
-
 ├── crypto/
-
 │   ├── aead.py
-
 │   ├── chacha20.py
-
 │   ├── hkdf.py
-
 │   ├── hmac.py
-
 │   ├── poly1305.py
-
 │   ├── sha256.py
-
 │   └── x25519.py
-
 │
-
 ├── protocol/
-
 │   ├── handshake.py
-
 │   └── session.py
-
 │
-
 ├── network/
-
 │   ├── client.py
-
 │   └── server.py
-
 │
-
 ├── Tests/
-
 │   ├── aead_Test.py
-
 │   ├── chacha20_Test.py
-
 │   ├── poly1305_Test.py
-
 │   ├── sha256_Test.py
-
 │   ├── hmac_Test.py
-
 │   ├── hkdf_Test.py
-
 │   └── x25519_Test.py
-
 │
-
 ├── requirements.txt
-
 ├── REPORT.md
-
 └── README.md
-
 └── Screenshoot
+```
 
 ---
 
@@ -95,13 +68,17 @@ Project/
 
 ### Start the Server
 
+```bash
 python -m network.server
+```
 
 ### Start the Client
 
 Open another terminal:
 
+```
 python -m network.client
+```
 
 ### Communication
 
@@ -131,31 +108,45 @@ RFC 7748 – X25519
 
 ChaCha20
 
+```
 python -m Tests.chacha20_Test
+```
 
 Poly1305
 
+```
 python -m Tests.poly1305_Test
+```
 
 AEAD ChaCha20-Poly1305
 
+```
 python -m Tests.aead_Test
+```
 
 SHA-256
 
+```
 python -m Tests.sha256_Test
+```
 
 HMAC-SHA256
 
+```
 python -m Tests.hmac_Test
+```
 
 HKDF
 
+```
 python -m Tests.hkdf_Test
+```
 
 X25519
 
+```
 python -m Tests.x25519_Test
+```
 
 All tests must pass successfully before submission.
 
