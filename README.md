@@ -4,7 +4,7 @@ Secure Chat Protocol Implementation
 
 Ghazal Salah – 1230542
 
-Baker – (ID not provided)
+Baker Shalabi - 1231050
 
 
 #Project Description
