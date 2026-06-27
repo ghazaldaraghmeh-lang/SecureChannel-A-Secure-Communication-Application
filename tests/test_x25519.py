@@ -1,4 +1,4 @@
-from x25519 import x25519
+from crypto.x25519 import x25519
 
 print("Running X25519 tests...\n")
 
@@ -28,4 +28,3 @@ print("Expected:", expected.hex())
 print("Got     :", result.hex())
 print("Pass:", result == expected)
 print()
-
