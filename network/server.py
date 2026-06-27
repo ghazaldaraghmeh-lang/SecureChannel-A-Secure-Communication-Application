@@ -1,6 +1,7 @@
 # server
 
 import socket
+import threading
 
 from protocol.handshake import (
     generate_ephemeral_keypair,
@@ -32,6 +33,48 @@ def recv(sock):
 
     return data
 
+def receiver(conn, keys):
+    while True:
+        try:
+            sequence = int.from_bytes(recv(conn), "big")
+            ciphertext = recv(conn)
+            tag = recv(conn)
+
+            message = decrypt_message(
+                keys["c2s_key"],
+                keys["nonce"],
+                sequence,
+                ciphertext,
+                tag
+            )
+
+            print("\nClient:", message.decode())
+
+        except:
+            print("Client disconnected.")
+            break
+        
+def sender(conn, keys):
+    while True:
+        try:
+            msg = input("You: ")
+
+            if msg.lower() == "exit":
+                conn.close()
+                break
+
+            sequence, ciphertext, tag = encrypt_message(
+                keys["s2c_key"],
+                keys["nonce"],
+                msg.encode()
+            )
+
+            send(conn, sequence.to_bytes(8, "big"))
+            send(conn, ciphertext)
+            send(conn, tag)
+
+        except:
+            break
 
 def main():
     server = socket.socket()
@@ -85,37 +128,23 @@ def main():
     print("S->C Key:", keys["s2c_key"].hex())
     print("Nonce   :", keys["nonce"].hex())
 
-    # =========================
-    # Receive Secure Message
-    # =========================
 
-    sequence = int.from_bytes(recv(conn), "big")
-    ciphertext = recv(conn)
-    tag = recv(conn)
-
-    message = decrypt_message(
-        keys["c2s_key"],
-        keys["nonce"],
-        sequence,
-        ciphertext,
-        tag
+    recv_thread = threading.Thread(
+        target=receiver,
+        args=(conn, keys),
+        daemon=True
     )
 
-    print("\n[SERVER] Client says:", message.decode())
-
-    # =========================
-    # Send Secure Reply
-    # =========================
-
-    sequence, ciphertext, tag = encrypt_message(
-        keys["s2c_key"],
-        keys["nonce"],
-        b"Hello Client"
+    send_thread = threading.Thread(
+        target=sender,
+        args=(conn, keys)
     )
 
-    send(conn, sequence.to_bytes(8, "big"))
-    send(conn, ciphertext)
-    send(conn, tag)
+    recv_thread.start()
+    send_thread.start()
+
+    send_thread.join()
+
 
     conn.close()
     server.close()
