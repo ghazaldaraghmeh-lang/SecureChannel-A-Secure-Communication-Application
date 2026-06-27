@@ -1,35 +1,32 @@
-Secure Chat Protocol Implementation
+# Secure Chat Protocol Implementation
 
-#Team Members
+---
 
-Ghazal Salah – 1230542
+## Team Members
 
-Baker Shalabi - 1231050
+- Ghazal Salah – 1230542  
+- Baker Shalabi – 1231050  
 
+---
 
-#Project Description
+## Project Description
 
 This project implements a secure communication protocol in Python using cryptographic primitives implemented from scratch according to official RFC specifications.
 
 The protocol provides:
 
-X25519 Ephemeral Diffie-Hellman key exchange (RFC 7748)
-
-HMAC-SHA256 authentication
-
-HKDF-SHA256 key derivation (RFC 5869)
-
-ChaCha20 stream cipher (RFC 8439)
-
-Poly1305 message authentication (RFC 8439)
-
-AEAD ChaCha20-Poly1305 authenticated encryption (RFC 8439)
+- X25519 Ephemeral Diffie-Hellman key exchange (RFC 7748)  
+- HMAC-SHA256 authentication  
+- HKDF-SHA256 key derivation (RFC 5869)  
+- ChaCha20 stream cipher (RFC 8439)  
+- Poly1305 message authentication (RFC 8439)  
+- AEAD ChaCha20-Poly1305 authenticated encryption (RFC 8439)  
 
 The system establishes a secure session between a client and a server, derives independent session keys, and protects messages against tampering and replay attacks.
 
+---
 
-#Project Structure
-
+## Project Structure
 Project/
 
 ├── crypto/
@@ -90,10 +87,11 @@ Project/
 
 └── README.md
 
+---
 
-#Running Instructions
+## Running Instructions
 
-Start the Server
+### Start the Server
 
 python -m network.server
 
@@ -113,6 +111,7 @@ To terminate the session, type:
 
 exit
 
+---
 
 #Test Vectors
 
@@ -124,6 +123,7 @@ RFC 5869 – HKDF
 RFC 8439 – ChaCha20, Poly1305, and AEAD
 RFC 7748 – X25519
 
+---
 
 #Running the Test Suite
 
@@ -157,6 +157,7 @@ python -m Tests.x25519_Test
 
 All tests must pass successfully before submission.
 
+---
 
 #Official References
 
@@ -169,6 +170,8 @@ HKDF (RFC 5869): https://datatracker.ietf.org/doc/html/rfc5869
 ChaCha20 / Poly1305 / AEAD (RFC 8439): https://datatracker.ietf.org/doc/html/rfc8439
 
 X25519 (RFC 7748): https://datatracker.ietf.org/doc/html/rfc7748
+
+---
 
 
 #Secret Material Policy
