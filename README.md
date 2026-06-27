@@ -68,7 +68,7 @@ Project/
 
 ### Start the Server
 
-```bash
+```
 python -m network.server
 ```
 
@@ -88,7 +88,9 @@ After connection is established, start typing messages to communicate securely.
 
 To terminate the session, type:
 
+```
 exit
+```
 
 ---
 
