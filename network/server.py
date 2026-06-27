@@ -76,7 +76,7 @@ def sender(conn, keys):
         except:
             break
 
-def main():
+def start_server_session():
     server = socket.socket()
     server.bind((HOST, PORT))
     server.listen(1)
@@ -112,7 +112,7 @@ def main():
 
         conn.close()
         server.close()
-        return
+        return None , None
 
     print("[SERVER] Client authenticated")
 
@@ -128,7 +128,15 @@ def main():
     print("S->C Key:", keys["s2c_key"].hex())
     print("Nonce   :", keys["nonce"].hex())
 
+    return conn, keys
 
+def main():
+    
+    conn, keys = start_server_session()
+
+    if conn is None:
+        return
+    
     recv_thread = threading.Thread(
         target=receiver,
         args=(conn, keys),
@@ -147,7 +155,6 @@ def main():
 
 
     conn.close()
-    server.close()
 
 
 if __name__ == "__main__":
