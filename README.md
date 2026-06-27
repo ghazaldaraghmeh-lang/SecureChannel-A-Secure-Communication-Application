@@ -97,17 +97,17 @@ Project/
 
 python -m network.server
 
-Start the Client
+### Start the Client
 
 Open another terminal:
 
 python -m network.client
 
-Communication
+### Communication
 
 After connection is established, start typing messages to communicate securely.
 
-Exit
+### Exit
 
 To terminate the session, type:
 
@@ -115,7 +115,7 @@ exit
 
 ---
 
-#Test Vectors
+### Test Vectors
 
 All implementations are verified against official test vectors defined in the corresponding standards:
 
@@ -127,7 +127,7 @@ RFC 7748 – X25519
 
 ---
 
-#Running the Test Suite
+### Running the Test Suite
 
 ChaCha20
 
@@ -161,7 +161,7 @@ All tests must pass successfully before submission.
 
 ---
 
-#Official References
+### Official References
 
 SHA-256 (FIPS 180-4): https://csrc.nist.gov/pubs/fips/180-4/final
 
@@ -176,7 +176,7 @@ X25519 (RFC 7748): https://datatracker.ietf.org/doc/html/rfc7748
 ---
 
 
-#Secret Material Policy
+### Secret Material Policy
 
 Long-term private keys and pre-shared keys must not be committed to the repository.
 
