@@ -1,6 +1,7 @@
 # client
 
 import socket
+import threading
 
 from protocol.handshake import (
     generate_ephemeral_keypair,
@@ -31,6 +32,44 @@ def recv(sock):
         data += sock.recv(size - len(data))
 
     return data
+
+def sender(sock, keys):
+    while True:
+        msg = input("You: ")
+
+        if msg.lower() == "exit":
+            sock.close()
+            break
+
+        sequence, ciphertext, tag = encrypt_message(
+            keys["c2s_key"],
+            keys["nonce"],
+            msg.encode()
+        )
+
+        send(sock, sequence.to_bytes(8, "big"))
+        send(sock, ciphertext)
+        send(sock, tag)
+        
+def receiver(sock, keys):
+    while True:
+        try:
+            sequence = int.from_bytes(recv(sock), "big")
+            ciphertext = recv(sock)
+            tag = recv(sock)
+
+            message = decrypt_message(
+                keys["s2c_key"],
+                keys["nonce"],
+                sequence,
+                ciphertext,
+                tag
+            )
+
+            print("\nServer:", message.decode())
+
+        except:
+            break
 
 
 def main():
@@ -76,39 +115,24 @@ def main():
     print("S->C Key:", keys["s2c_key"].hex())
     print("Nonce   :", keys["nonce"].hex())
 
-    # =========================
-    # Send Secure Message
-    # =========================
-
-    sequence, ciphertext, tag = encrypt_message(
-        keys["c2s_key"],
-        keys["nonce"],
-        b"Hello Server"
+    
+    send_thread = threading.Thread(
+        target=sender,
+        args=(sock, keys)
     )
 
-    send(sock, sequence.to_bytes(8, "big"))
-    send(sock, ciphertext)
-    send(sock, tag)
-
-    # =========================
-    # Receive Secure Reply
-    # =========================
-
-    sequence = int.from_bytes(recv(sock), "big")
-    ciphertext = recv(sock)
-    tag = recv(sock)
-
-    message = decrypt_message(
-        keys["s2c_key"],
-        keys["nonce"],
-        sequence,
-        ciphertext,
-        tag
+    recv_thread = threading.Thread(
+        target=receiver,
+        args=(sock, keys),
+        daemon=True
     )
 
-    print("\n[CLIENT] Server says:", message.decode())
+    recv_thread.start()
+    send_thread.start()
 
-
+    send_thread.join()
+     
+  
     sock.close()
 
 
